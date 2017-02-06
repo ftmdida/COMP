@@ -4,8 +4,8 @@ from convertString2Dictionary import convertString2Dictionary
 
 class MyTestCase(unittest.TestCase):
     # valid parameters
-    # With one key-value pair
     # 100_0xx
+    # With one key-value pair
     def test100_001ValidParameterWithOnePair(self):
         self.assertEqual(convertString2Dictionary('abc%3D123'), {'abc':'123'})
 
@@ -23,7 +23,6 @@ class MyTestCase(unittest.TestCase):
     #    self.assertEqual()
 
     # invalid-parameters
-
     # should return Python dictionary {'error': 'true'} with invalid key
     # 200_0xx
     # non-string key
@@ -56,11 +55,11 @@ class MyTestCase(unittest.TestCase):
     def test300_001InvalidParameter_MissingValue(self):
         self.assertEqual(convertString2Dictionary('key%3D'), {'error':'true'})
 
-    # embedded blank characters in key-value pairs
+    # value with embedded blank characters
     def test300_002InvalidParameter_ValueWithEmbeddedBlankCharacters(self):
         self.assertEqual(convertString2Dictionary('key%20%3D%20v%20a%20l%20ue'), {'error': 'true'})
 
-    # should raise Python dictionary {'error': 'true'} with invalid key-value pairs
+    # should return Python dictionary {'error': 'true'} with invalid key-value pairs
     # 400_0xx
     # empty input string
     def test400_001InvalidParameter_WithoutKeyValuePairs(self):
@@ -68,14 +67,18 @@ class MyTestCase(unittest.TestCase):
 
     # blank input string
     def test400_002InvalidParameter_WithoutKeyValuePairs_WithBlankString(self):
-        self.assertEqual(convertString2Dictionary(' '), {'error': 'true'})
+        self.assertEqual(convertString2Dictionary('%3D%20'), {'error': 'true'})
 
-    # non-string input string
+    # input string with None
     def test400_003InvalidParameter_WithInvalidKey(self):
         self.assertEqual(convertString2Dictionary(None), {'error': 'true'})
 
-    # input without legal seperator
-    def test400_004InvalidParameter_KeyValuePairsWithoutLegalSeperator(self):
+    # non-string
+    def test400_004InvalidParameter_WithNonStringKeyValuePairs(self):
+        self.assertEqual(convertString2Dictionary(42), {'error': 'true'} )
+
+    # input without legal separator
+    def test400_005InvalidParameter_KeyValuePairsWithoutLegalSeparator(self):
         self.assertEqual(convertString2Dictionary('key1%3Dvalue%3B%20key2%3Dvalue'), {'error': 'true'})
 
 

@@ -3,52 +3,55 @@ from convertString2Dictionary import convertString2Dictionary
 
 
 class MyTestCase(unittest.TestCase):
-    # valid parameters
-    # 100_0xx
-    # With one key-value pair
+    def setUp(self):
+        dictionary=dict()
+
+    # # valid parameters
+    # # 100_0xx
+    # # With one key-value pair
     def test100_001ValidParameterWithOnePair(self):
-        # self.assertEqual(convertString2Dictionary('abc%3D123'), {'abc':'123'})
-        convertString2Dictionary('function%3D%20calculatePosition%2C%20sighting%3DBetelgeuse')
+        convertString2Dictionary('abc%3D123')
+        self.dictionary = convertString2Dictionary('abc%3D123')
+        self.assertEqual(self.dictionary, {'abc':'123'})
 
     # With two key-value pairs
-    # def test100_002ValidParameterWithTwoPairs(self):
-    #    self.assertEqual(convertString2Dictionary('function%3D%20calculatePosition%2C%20sighting%3DBetelgeuse'),
-    #                     {'function':'calculatePosition', 'sighting':'Betelgeuse'})
+    def test100_002ValidParameterWithTwoPairs(self):
+        self.dictionary = convertString2Dictionary('function%3D%20calculatePosition%2C%20sighting%3DBetelgeuse')
+        self.assertEqual(self.dictionary, {'function':'calculatePosition', 'sighting':'Betelgeuse'})
 
     # With multiple key-value pairs
-    #def test100_003ValidParameterWithMultiplePairs(self):
-    #    self.assertEqual(convertString2Dictionary('function%3D%20calculatePosition%2C%20abc%3D123%2C%20abc%3D123'),
-    #                     {'function':'calculatePosition', 'abc':'123', 'abc':'123'})
+    def test100_003ValidParameterWithMultiplePairs(self):
+        self.dictionary = convertString2Dictionary('function%3D%20calculatePosition%2C%20abc%3D123%2C%20abc%3D123')
+        self.assertEqual(self.dictionary,{'function':'calculatePosition', 'abc':'123', 'abc':'123'})
 
-    # def test_validParameter_PercentEncodedString(self):
-    #    self.assertEqual()
+    # # def test_validParameter_PercentEncodedString(self):
+    # #    self.assertEqual()
 
     # invalid-parameters
     # should return Python dictionary {'error': 'true'} with invalid key
     # 200_0xx
     # non-string key
-    # def test200_001InvalidParameter_WithNonStringKey(self):
-    #    print convertString2Dictionary('42%3D%20value')
-    #    self.assertEqual(convertString2Dictionary('42%3D%20value'), {'error': 'true'})
-    #
-    # # key starts with number
-    # def test200_002InvalidParameter_InvalidKey(self):
-    #     self.assertEqual(convertString2Dictionary('1key%3Dvalue'), {'error': 'true'})
-    #
-    # # key with embedded blank characters
-    # def test200_003InvalidParameter_KeyWithEmbeddedBlankCharacters(self):
-    #     self.assertEqual(convertString2Dictionary('k%20e%20y%20%3D%20value'), {'error': 'true'})
-    #
-    # # key starts with blank character
-    # def test200_004InvalidParameter_KeyStartsWithBlankCharacter(self):
-    #     self.assertEqual(convertString2Dictionary('%20key%3D%20value'), {'error': 'true'})
-    #
-    # # duplicate key
-    # def test200_005InvalidParameter_DuplicateKey(self):
-    #     self.assertEqual(convertString2Dictionary('key%3Dvalue%2C%20key%3Dvalue'), {'error':'true'})
-    #
+    def test200_001InvalidParameter_WithNonStringKey(self):
+        self.dictionary = convertString2Dictionary('42%3D%20value')
+        self.assertEqual(self.dictionary, {'error': 'true'})
+
+    # key starts with number
+    def test200_002InvalidParameter_InvalidKey(self):
+        self.dictionary = convertString2Dictionary('1key%3Dvalue')
+        self.assertEqual(self.dictionary, {'error': 'true'})
+
+    # key with embedded blank characters
+    def test200_003InvalidParameter_KeyWithEmbeddedBlankCharacters(self):
+        self.dictionary = convertString2Dictionary('k%20e%20y%20%3D%20value')
+        self.assertEqual(self.dictionary, {'error': 'true'})
+
+    # duplicate key
+    def test200_004InvalidParameter_DuplicateKey(self):
+        self.dictionary = convertString2Dictionary('key%3Dvalue%2C%20key%3Dvalue')
+        self.assertEqual(self.dictionary, {'error':'true'})
+
     # # missing key
-    # def test200_006InvalidParameter_MissingKey(self):
+    # def test200_005InvalidParameter_MissingKey(self):
     #     self.assertEqual(convertString2Dictionary('value'), {'error': 'true'})
     #
     # # should return Python dictionary {'error': 'true'} with invalid value
